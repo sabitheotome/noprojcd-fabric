@@ -25,11 +25,10 @@ public class MobEntityMixin {
 			return;
 
 		var self = (MobEntity) (Object) this;
-		var explosionIntensity = 0;
+		var explosionIntensity = 1;
 		SoundEvent sound = null;
 
 		if (self instanceof GhastEntity) {
-			explosionIntensity = 1;
 			sound = SoundEvents.ENTITY_GHAST_SHOOT;
 		} else if (self instanceof BlazeEntity) {
 			sound = SoundEvents.ENTITY_BLAZE_SHOOT;
