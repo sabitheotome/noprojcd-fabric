@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import me.sabitheotome.noprojcd.NoProjectileCooldown;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,6 +25,9 @@ public class ItemMixin {
 	@Inject(at = @At("HEAD"), method = "use", cancellable = true)
 	private void use(World world, PlayerEntity user, Hand hand,
 			CallbackInfoReturnable<TypedActionResult<ItemStack>> info) {
+		if (!NoProjectileCooldown.isEnabled.get())
+			return;
+
 		var itemStack = user.getStackInHand(hand);
 
 		var isTNT = itemStack.isOf(Blocks.TNT.asItem());

@@ -12,11 +12,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import me.sabitheotome.noprojcd.NoProjectileCooldown;
+
 @Mixin(EnderPearlItem.class)
 public class EnderPearlItemMixin {
 	@Inject(at = @At("RETURN"), method = "use")
 	private void use(World world, PlayerEntity user, Hand hand,
 			CallbackInfoReturnable<TypedActionResult<ItemStack>> info) {
-		user.getItemCooldownManager().set((EnderPearlItem) (Object) this, 0);
+		if (NoProjectileCooldown.isEnabled.get())
+			user.getItemCooldownManager().set((EnderPearlItem) (Object) this, 0);
 	}
 }
